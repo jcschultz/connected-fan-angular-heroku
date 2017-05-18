@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 
-let window :any;
+let window :any = {};
 
 @Component({
   selector : 'app-root',
