@@ -20,5 +20,7 @@ export class AppComponent implements OnInit {
       messagingSenderId : window.FIREBASE_CONFIG_MESSAGING_SENDER_ID
     };
     firebase.initializeApp(firebaseConfig);
+    
+    console.log('firebaseConfig', firebaseConfig);
   }
 }
