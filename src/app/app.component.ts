@@ -21,6 +21,5 @@ export class AppComponent implements OnInit {
     };
     firebase.initializeApp(firebaseConfig);
     
-    console.log('firebaseConfig', firebaseConfig);
   }
 }
