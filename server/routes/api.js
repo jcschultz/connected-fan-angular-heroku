@@ -29,7 +29,6 @@ const validActions = ['high', 'medium', 'low', 'off'];
 let fanIpAddress = null;
 
 function sendRequest(path) {
-  console.log('in sendRequest');
   return new Promise((resolve, reject) => {
     superagent
       .get(fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path)
@@ -47,7 +46,6 @@ function sendRequest(path) {
 
 // middleware to check the firebase token for client side authentication
 router.use(function(req, res, next) {
-  console.log('middleware. firebase verifyIdToken', req);
   let token = req.body.token;
   
   if (!token) {
@@ -76,6 +74,7 @@ router.use(function(req, res, next) {
     .send(authData)
     .then(function(err, tokenResponse) {
       console.log('tokenResponse', tokenResponse);
+      console.log('err', err);
       if(tokenResponse.body.access_token){
         req.access_token = tokenResponse.body.access_token;
         next();
