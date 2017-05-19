@@ -78,7 +78,7 @@ router.use(function(req, res, next) {
       next();
     })
     .catch((err) => {
-      res.redirect('/login');
+      return res.redirect('/login');
     });
 });
 
@@ -120,7 +120,7 @@ router.use(function(req, res, next) {
       console.log('@@@ BEGIN ERROR FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
       console.log(err);
       console.log('@@@ END ERROR FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
-      res.status(401).json(err);
+      return res.status(401).json(err);
     });
 });
 
@@ -142,18 +142,18 @@ router.use(function(req, res, next) {
   
   request(uri)
     .then((response) => {
-      if (!response || !response.body || !response.body.address) {
+      if (!response || !response.address) {
         return res.status(500).json(response);
       }
 
-      fanIpAddress = response.body.address;
+      fanIpAddress = response.address;
       next();
     })
     .catch((err) => {
       console.log('@@@ BEGIN ERROR FROM IP TRACKER REQUEST @@@');
       console.log(err);
       console.log('@@@ END ERROR FROM IP TRACKER REQUEST @@@');
-      res.status(500).json(err);
+      return res.status(500).json(err);
     });
 });
 
@@ -166,7 +166,7 @@ router.put('/fan/:action', function (req, res, next) {
   
   sendRequest('/fan/' + action)
     .then((response) => {
-      res.status(200).send('success');
+      res.status(200).json(response);
     })
     .catch((err) => {
       console.log('@@@ BEGIN ERROR FROM FAN API REQUEST @@@');
@@ -180,7 +180,7 @@ router.put('/light', function (req, res, next) {
   console.log('@@@ INSIDE LIGHT API REQUEST @@@');
   sendRequest('/light')
     .then((response) => {
-      res.status(200).send('success');
+      res.status(200).json(response);
     })
     .catch((err) => {
       console.log('@@@ BEGIN ERROR FROM LIGHT API REQUEST @@@');
