@@ -23,7 +23,36 @@
   border-color: #f00;
 }
 .light-toggle {
-  color: #fff;
-  background-color: #feeb65;
-  border-color: #feeb65;
+  color: #DB5087;
+  background-color: #FFECB3;
+  border-color: #FFECB3;
+}
+
+.glyphicon.glyphicon-refresh {
+  -webkit-animation: button-spin 1s infinite linear;
+  animation: button-spin 1s infinite linear;
+}
+
+@-webkit-keyframes button-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes button-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
 }

@@ -1,13 +1,27 @@
+<div class="col-md-4 col-md-offset-4 col-xs-12" *ngIf="errorMsg">
+  <div class="alert alert-danger" role="alert">{{errorMsg}}</div>
+</div>
+
 <div class="col-md-4 col-md-offset-4 col-xs-12 panel panel-default">
   <h4 class="text-center">Fan Speed</h4>
-  <button type="button" class="fan-high btn btn-lg btn-block btn-default" (click)="onBtnClick('fan', 'high')">High</button>
-  <button type="button" class="fan-medium btn btn-lg btn-block btn-default" (click)="onBtnClick('fan', 'medium')">Medium</button>
-  <button type="button" class="fan-low btn btn-lg btn-block btn-default" (click)="onBtnClick('fan', 'low')">Low</button>
-  <button type="button" class="fan-off btn btn-lg btn-block btn-default" (click)="onBtnClick('fan', 'off')">Off</button>
+  <button type="button" class="fan-high btn btn-lg btn-block btn-default" (click)="onBtnClick('fan', 'high')">
+    <span *ngIf="activeButton == 'high'" class="glyphicon glyphicon-refresh"></span> High
+  </button>
+  <button type="button" class="fan-medium btn btn-lg btn-block btn-default" (click)="onBtnClick('fan', 'medium')">
+    <span *ngIf="activeButton == 'medium'" class="glyphicon glyphicon-refresh"></span> Medium
+  </button>
+  <button type="button" class="fan-low btn btn-lg btn-block btn-default" (click)="onBtnClick('fan', 'low')">
+    <span *ngIf="activeButton == 'low'" class="glyphicon glyphicon-refresh"></span> Low
+  </button>
+  <button type="button" class="fan-off btn btn-lg btn-block btn-default" (click)="onBtnClick('fan', 'off')">
+    <span *ngIf="activeButton == 'off'" class="glyphicon glyphicon-refresh"></span> Off
+  </button>
 </div>
 
 <div class="col-md-4 col-md-offset-4 col-xs-12 panel panel-default">
   <h4 class="text-center">Light</h4>
-  <button type="button" class="light-toggle btn btn-lg btn-block btn-default" (click)="onBtnClick('light', null)">Toggle</button>
+  <button type="button" class="light-toggle btn btn-lg btn-block btn-default" (click)="onBtnClick('light', null)" [disabled]="actionPending">
+    <span *ngIf="activeButton == 'light'" class="glyphicon glyphicon-refresh"></span> Toggle
+  </button>
 </div>
 
