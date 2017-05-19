@@ -106,7 +106,7 @@ router.use(function(req, res, next) {
   request(options)
     .then((response) => {
       if (response && response.access_token) {
-        req.access_token = response.body.access_token;
+        req.access_token = response.access_token;
         next();
       }
       else {
