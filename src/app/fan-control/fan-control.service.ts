@@ -23,9 +23,12 @@ export class FanControlService {
         json: true
       }, (error, response, body) => {
         if (error) {
+          console.info(error);
           reject(error);
         }
         else {
+          console.info(response);
+          console.info(body);
           resolve();
         }
       });
