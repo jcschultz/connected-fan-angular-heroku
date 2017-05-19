@@ -24,7 +24,7 @@ export class FanControlService {
           reject(error);
         }
         else {
-          resolve(response, body);
+          resolve({response: response, body: body});
         }
       });
     });
