@@ -84,9 +84,13 @@ router.use(function(req, res, next) {
 
 // middleware to get ip address of connected fan
 router.use(function(req, res, next) {
+  console.log('@@@@ in middleware to get ip address');
   superagent
     .get(process.env.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME)
     .then(function(data) {
+      console.log('@@@ ip address data:');
+      console.log(data);
+      console.log('@@@ end data');
       if (!data || data.status === 404 || !data.body || !data.body.address) {
         return res.status(500).send('The connected fan could not be found');
       }
