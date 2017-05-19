@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-let api = require('./routes/api');
+let api = require('./server/routes/api');
 
 const forceSSL = function () {
   return function (req, res, next) {
