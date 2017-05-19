@@ -1,3 +1,29 @@
 .panel {
   padding-bottom: 10px;
 }
+
+.fan-high {
+  color: #fff;
+  background-color: #1B2D81;
+  border-color: #1B2D81;
+}
+.fan-medium {
+  color: #fff;
+  background-color: #3884B6;
+  border-color: #3884B6;
+}
+.fan-low {
+  color: #fff;
+  background-color: #84CBCF;
+  border-color: #84CBCF;
+}
+.fan-off {
+  color: #f00;
+  background-color: #fff;
+  border-color: #f00;
+}
+.light-toggle {
+  color: #fff;
+  background-color: #feeb65;
+  border-color: #feeb65;
+}
