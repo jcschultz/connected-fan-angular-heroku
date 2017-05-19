@@ -42,7 +42,7 @@ function sendRequest(path, req) {
     //       resolve();
     //     }
     //   });
-    let uri = fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path;
+    let uri = 'http://' + fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path;
     let options = {
       method: 'GET',
       uri: uri,
