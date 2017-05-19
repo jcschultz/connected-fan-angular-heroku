@@ -42,13 +42,19 @@ function sendRequest(path) {
     //       resolve();
     //     }
     //   });
+    let uri = fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path;
     let options = {
       method: 'GET',
-      uri: fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path,
+      uri: uri,
       auth: {
         bearer: req.access_token
       }
     };
+    
+    console.log('@@@ BEGIN SEND API REQUEST INFO @@@');
+    console.log('uri', uri);
+    console.log('options', options);
+    console.log('@@@ BEGIN SEND API REQUEST INFO @@@');
     
     return request(options);
   //});
