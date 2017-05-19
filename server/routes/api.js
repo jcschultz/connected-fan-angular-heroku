@@ -142,7 +142,7 @@ router.use(function(req, res, next) {
   request(uri)
     .then((response) => {
       if (!response || !response.body || !response.body.address) {
-        return res.status(500).send('The connected fan could not be found');
+        return res.status(500).json(response);
       }
 
       fanIpAddress = response.body.address;
