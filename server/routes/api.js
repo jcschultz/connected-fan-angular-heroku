@@ -109,6 +109,12 @@ router.use(function(req, res, next) {
         req.access_token = response.body.access_token;
         next();
       }
+      else {
+        console.log('@@@ BEGIN MISSING ACCESS_TOKEN FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
+        console.log(response);
+        console.log('@@@ END MISSING ACCESS_TOKEN FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
+        res.status(401).json(err);
+      }
     })
     .catch((err) => {
       console.log('@@@ BEGIN ERROR FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
