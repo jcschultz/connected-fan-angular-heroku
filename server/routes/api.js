@@ -138,6 +138,7 @@ router.use(function(req, res, next) {
   //   });
   console.log('@@@ INSIDE IP TRACKER REQUEST @@@');
   let uri = process.env.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME;
+  console.log('uri: ', uri);
   
   request(uri)
     .then((response) => {
