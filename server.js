@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+let api = require('./routes/api');
+
 const forceSSL = function () {
   return function (req, res, next) {
     if (req.headers['x-forwarded-proto'] !== 'https') {
@@ -22,6 +24,8 @@ app.use(cookieParser());
 app.use(express.static(__dirname + '/dist'));
 
 app.listen(process.env.PORT || 3000);
+
+app.use('/api', api);
 
 app.get('/firebaseConfig.js', function(req, res){
   

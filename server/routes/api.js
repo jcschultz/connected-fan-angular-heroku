@@ -96,7 +96,7 @@ router.use(function(req, res, next) {
     });
 });
 
-router.put('/api/fan/:action', function (req, res, next) {
+router.put('/fan/:action', function (req, res, next) {
   let action = req.params.action;
   
   if (validActions.indexOf(action) < 0) {
@@ -112,7 +112,7 @@ router.put('/api/fan/:action', function (req, res, next) {
     })
 });
 
-router.put('/api/light', function (req, res, next) {
+router.put('/light', function (req, res, next) {
   sendRequest('/light')
     .then(() => {
       res.status(200).send('success');
