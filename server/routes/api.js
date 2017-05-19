@@ -142,6 +142,7 @@ router.use(function(req, res, next) {
   
   request(uri)
     .then((response) => {
+      response = JSON.parse(response);
       console.log('ip tracker response:', response);
       if (!response || !response.address) {
         return res.status(500).json(response);
