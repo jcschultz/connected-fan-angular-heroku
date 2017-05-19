@@ -6,26 +6,31 @@
   color: #fff;
   background-color: #1B2D81;
   border-color: #1B2D81;
+  outline: 0;
 }
 .fan-medium {
   color: #fff;
   background-color: #3884B6;
   border-color: #3884B6;
+  outline: 0;
 }
 .fan-low {
   color: #fff;
   background-color: #84CBCF;
   border-color: #84CBCF;
+  outline: 0;
 }
 .fan-off {
   color: #f00;
   background-color: #fff;
   border-color: #f00;
+  outline: 0;
 }
 .light-toggle {
   color: #DB5087;
   background-color: #FFECB3;
   border-color: #FFECB3;
+  outline: 0;
 }
 
 .glyphicon.glyphicon-refresh {
