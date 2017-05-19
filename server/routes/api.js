@@ -29,6 +29,7 @@ const validActions = ['high', 'medium', 'low', 'off'];
 let fanIpAddress = null;
 
 function sendRequest(path) {
+  console.log('in sendRequest');
   return new Promise((resolve, reject) => {
     superagent
       .get(fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path)
@@ -46,6 +47,7 @@ function sendRequest(path) {
 
 // middleware to check the firebase token for client side authentication
 router.use(function(req, res, next) {
+  console.log('middleware. firebase verifyIdToken', req);
   let token = req.body.token;
   
   if (!token) {
@@ -68,10 +70,12 @@ router.use(function(req, res, next) {
 
 // middleware to get auth0 token for fan api
 router.use(function(req, res, next) {
+  console.log('middlware auth0 token');
   superagent
     .post(process.env.AUTH0_CLIENT_TOKEN_URL)
     .send(authData)
     .then(function(err, tokenResponse) {
+      console.log('tokenResponse', tokenResponse);
       if(tokenResponse.body.access_token){
         req.access_token = tokenResponse.body.access_token;
         next();
@@ -84,9 +88,11 @@ router.use(function(req, res, next) {
 
 // middleware to get ip address of connected fan
 router.use(function(req, res, next) {
+  console.log('middleware ip address');
   superagent
     .get(process.env.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME)
     .then(function(err, data) {
+      console.log('ipaddress data:', data);
       if (data.status === 404 || !data.body || !data.body.address) {
         return res.status(500).send('The connected fan could not be found');
       }
