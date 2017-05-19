@@ -33,7 +33,7 @@ function sendRequest(path) {
     superagent
       .get(fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path)
       .set('Authorization', 'Bearer ' + req.access_token)
-      .end(function(err, data) {
+      .then(function(err, data) {
         if(data.status !== 200){
           reject(data)
         }
@@ -71,7 +71,7 @@ router.use(function(req, res, next) {
   superagent
     .post(process.env.AUTH0_CLIENT_TOKEN_URL)
     .send(authData)
-    .end(function(err, tokenResponse) {
+    .then(function(err, tokenResponse) {
       if(tokenResponse.body.access_token){
         req.access_token = tokenResponse.body.access_token;
         next();
@@ -86,7 +86,7 @@ router.use(function(req, res, next) {
 router.use(function(req, res, next) {
   superagent
     .get(process.env.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME)
-    .end(function(err, data) {
+    .then(function(err, data) {
       if (data.status === 404 || !data.body || !data.body.address) {
         return res.status(500).send('The connected fan could not be found');
       }
