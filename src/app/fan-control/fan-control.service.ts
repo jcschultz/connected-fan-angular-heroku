@@ -19,8 +19,7 @@ export class FanControlService {
       request({
         method: 'PUT',
         url: url,
-        body: {'token' : token},
-        json: true
+        json: {'token' : token}
       }, (error, response, body) => {
         if (error) {
           console.info(error);
