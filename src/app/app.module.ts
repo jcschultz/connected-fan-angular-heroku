@@ -9,6 +9,7 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { AppRouterModule } from './app-router/app-router.module';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
+import { FanControlService } from './fan-control/fan-control.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AuthService } from './auth/auth.service';
   ],
   providers: [
     AuthGuardService,
-    AuthService
+    AuthService,
+    FanControlService
   ],
   bootstrap: [AppComponent]
 })
