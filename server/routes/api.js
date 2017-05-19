@@ -29,7 +29,7 @@ const validActions = ['high', 'medium', 'low', 'off'];
 
 let fanIpAddress = null;
 
-function sendRequest(path) {
+function sendRequest(path, req) {
   //return new Promise((resolve, reject) => {
     // superagent
     //   .get(fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path)
@@ -166,7 +166,7 @@ router.put('/fan/:action', function (req, res, next) {
     return res.status(500).send('Invalid action');
   }
   
-  sendRequest('/fan/' + action)
+  sendRequest('/fan/' + action, req)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -180,7 +180,7 @@ router.put('/fan/:action', function (req, res, next) {
 
 router.put('/light', function (req, res, next) {
   console.log('@@@ INSIDE LIGHT API REQUEST @@@');
-  sendRequest('/light')
+  sendRequest('/light', req)
     .then((response) => {
       res.status(200).json(response);
     })
