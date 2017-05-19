@@ -5,49 +5,32 @@ let request = require('request-promise-native');
 let firebaseApp = require('./../modules/firebase');
 
 const auth0Data = {
-  client_id: process.env.AUTH0_FAN_CLIENT_ID,
-  client_secret: process.env.AUTH0_FAN_CLIENT_SECRET,
-  grant_type: process.env.AUTH0_GRANT_TYPE,
-  audience: process.env.AUTH0_FAN_AUDIENCE
-}
+  client_id : process.env.AUTH0_FAN_CLIENT_ID,
+  client_secret : process.env.AUTH0_FAN_CLIENT_SECRET,
+  grant_type : process.env.AUTH0_GRANT_TYPE,
+  audience : process.env.AUTH0_FAN_AUDIENCE
+};
 
 const validActions = ['high', 'medium', 'low', 'off'];
 
 let fanIpAddress = null;
 
 function sendRequest(path, req) {
-  //return new Promise((resolve, reject) => {
-    // superagent
-    //   .get(fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path)
-    //   .set('Authorization', 'Bearer ' + req.access_token)
-    //   .then(function(data) {
-    //     if(data.status !== 200){
-    //       reject(data)
-    //     }
-    //     else {
-    //       resolve();
-    //     }
-    //   });
-    let uri = 'http://' + fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path;
-    let options = {
-      method: 'GET',
-      uri: uri,
-      auth: {
-        bearer: req.access_token
-      }
-    };
-    
-    console.log('@@@ BEGIN SEND API REQUEST INFO @@@');
-    console.log('uri', uri);
-    console.log('options', options);
-    console.log('@@@ BEGIN SEND API REQUEST INFO @@@');
-    
-    return request(options);
-  //});
+  
+  let uri = 'http://' + fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path;
+  let options = {
+    method : 'GET',
+    uri : uri,
+    auth : {
+      bearer : req.access_token
+    }
+  };
+  
+  return request(options);
 }
 
 // middleware to check the firebase token for client side authentication
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
   let token = req.body.token;
   
   if (!token) {
@@ -64,24 +47,12 @@ router.use(function(req, res, next) {
 });
 
 // middleware to get auth0 token for fan api
-router.use(function(req, res, next) {
-  // superagent
-  //   .post(process.env.AUTH0_CLIENT_TOKEN_URL)
-  //   .send(auth0Data)
-  //   .then(function(tokenResponse) {
-  //     if(tokenResponse && tokenResponse.body && tokenResponse.body.access_token){
-  //       req.access_token = tokenResponse.body.access_token;
-  //       next();
-  //     }
-  //     else {
-  //       res.status(401).send('Unauthorized');
-  //     }
-  //   })
-  console.log('@@@ INSIDE AUTH0 TOKEN REQUEST @@@');
+router.use(function (req, res, next) {
+  
   let options = {
-    method: 'POST',
-    uri: process.env.AUTH0_CLIENT_TOKEN_URL,
-    json: auth0Data
+    method : 'POST',
+    uri : process.env.AUTH0_CLIENT_TOKEN_URL,
+    json : auth0Data
   };
   
   request(options)
@@ -91,51 +62,31 @@ router.use(function(req, res, next) {
         next();
       }
       else {
-        console.log('@@@ BEGIN MISSING ACCESS_TOKEN FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
-        console.log(response);
-        console.log('@@@ END MISSING ACCESS_TOKEN FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
         return res.status(401).json(response);
       }
     })
     .catch((err) => {
-      console.log('@@@ BEGIN ERROR FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
-      console.log(err);
-      console.log('@@@ END ERROR FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
       return res.status(401).json(err);
     });
 });
 
 // middleware to get ip address of connected fan
-router.use(function(req, res, next) {
-  // superagent
-  //   .get(process.env.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME)
-  //   .then(function(data) {
-  //     if (!data || data.status === 404 || !data.body || !data.body.address) {
-  //       return res.status(500).send('The connected fan could not be found');
-  //     }
-  //
-  //     fanIpAddress = data.body.address;
-  //     next();
-  //   });
-  console.log('@@@ INSIDE IP TRACKER REQUEST @@@');
+router.use(function (req, res, next) {
+  
   let uri = process.env.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME;
   console.log('uri: ', uri);
   
   request(uri)
     .then((response) => {
       response = JSON.parse(response);
-      console.log('ip tracker response:', response);
       if (!response || !response.address) {
         return res.status(500).json(response);
       }
-
+      
       fanIpAddress = response.address;
       next();
     })
     .catch((err) => {
-      console.log('@@@ BEGIN ERROR FROM IP TRACKER REQUEST @@@');
-      console.log(err);
-      console.log('@@@ END ERROR FROM IP TRACKER REQUEST @@@');
       return res.status(500).json(err);
     });
 });
@@ -152,23 +103,16 @@ router.put('/fan/:action', function (req, res, next) {
       res.status(200).json(response);
     })
     .catch((err) => {
-      console.log('@@@ BEGIN ERROR FROM FAN API REQUEST @@@');
-      console.log(err);
-      console.log('@@@ END ERROR FROM FAN API REQUEST @@@');
       res.status(500).json(err);
     });
 });
 
 router.put('/light', function (req, res, next) {
-  console.log('@@@ INSIDE LIGHT API REQUEST @@@');
   sendRequest('/light', req)
     .then((response) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      console.log('@@@ BEGIN ERROR FROM LIGHT API REQUEST @@@');
-      console.log(err);
-      console.log('@@@ END ERROR FROM LIGHT API REQUEST @@@');
       res.status(500).json(err);
     });
 });
