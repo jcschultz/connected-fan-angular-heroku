@@ -26,11 +26,9 @@ export class HomeComponentComponent implements OnInit {
     this.fanControlService.callAction(control, speed, this.token)
       .then((res) => {
         console.log('successfully called fan action');
-      }, (err) => {
-        console.log('err', err);
       })
       .catch((err) => {
-        console.log('error calling fan action', err);
+        console.error('error calling fan action', err);
       });
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as request from 'request';
+import * as request from 'request-promise-native';
 
 let _window: any = window;
 
@@ -15,23 +15,13 @@ export class FanControlService {
       url += '/' + action;
     }
     
-    return new Promise((resolve, reject) => {
-      request({
-        method: 'PUT',
-        url: url,
-        json: {'token' : token}
-      }, (error, response, body) => {
-        if (error) {
-          console.info(error);
-          reject(error);
-        }
-        else {
-          console.info(response);
-          console.info(body);
-          resolve();
-        }
-      });
-    });
+    let options = {
+      method: 'PUT',
+      url: url,
+      json: {'token' : token}
+    };
+    
+    return request(options);
   }
   
 }

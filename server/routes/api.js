@@ -2,21 +2,7 @@ let express = require('express');
 let router = express.Router();
 let superagent = require('superagent');
 let request = require('request-promise-native');
-
-let admin = require('firebase-admin');
-
-const serviceAccount = {
-  "type": process.env.FIREBASE_TYPE,
-  "project_id": process.env.FIREBASE_PROJECT_ID,
-  'private_key_id': process.env.FIREBASE_PRIVATE_KEY_ID,
-  'private_key': process.env.FIREBASE_PRIVATE_KEY,
-  'client_email': process.env.FIREBASE_CLIENT_EMAIL,
-  'client_id': process.env.FIREBASE_CLIENT_ID,
-  'auth_uri': process.env.FIREBASE_AUTH_URI,
-  'token_uri': process.env.FIREBASE_TOKEN_URI,
-  'auth_provider_x509_cert_url': process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
-  'client_x509_cert_url': process.env.FIREBASE_CLIENT_X509_CERT_URL,
-};
+let firebaseApp = require('./../modules/firebase');
 
 const auth0Data = {
   client_id: process.env.AUTH0_FAN_CLIENT_ID,
@@ -68,12 +54,7 @@ router.use(function(req, res, next) {
     return res.redirect('/login');
   }
   
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.FIREBASE_DATABASE_URL
-  });
-  
-  admin.auth().verifyIdToken(token)
+  firebaseApp.verifyIdToken(token)
     .then((decodedToken) => {
       next();
     })

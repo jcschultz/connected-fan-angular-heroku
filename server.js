@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 let api = require('./server/routes/api');
+let firebaseApp = require('./server/modules/firebase');
 
 const forceSSL = function () {
   return function (req, res, next) {
@@ -24,6 +25,8 @@ app.use(cookieParser());
 app.use(express.static(__dirname + '/dist'));
 
 app.listen(process.env.PORT || 3000);
+
+firebaseApp.initApp();
 
 app.use('/api', api);
 
