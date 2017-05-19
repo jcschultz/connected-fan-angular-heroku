@@ -68,14 +68,11 @@ router.use(function(req, res, next) {
 
 // middleware to get auth0 token for fan api
 router.use(function(req, res, next) {
-  console.log('middlware auth0 token');
   superagent
     .post(process.env.AUTH0_CLIENT_TOKEN_URL)
     .send(authData)
-    .then(function(err, tokenResponse) {
-      console.log('tokenResponse', tokenResponse);
-      console.log('err', err);
-      if(tokenResponse.body.access_token){
+    .then(function(tokenResponse) {
+      if(tokenResponse && tokenResponse.body && tokenResponse.body.access_token){
         req.access_token = tokenResponse.body.access_token;
         next();
       }
