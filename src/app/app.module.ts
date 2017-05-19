@@ -12,6 +12,7 @@ import { AppRouterModule } from './app-router/app-router.module';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
 import { FanControlService } from './fan-control/fan-control.service';
+import { firebaseConfig } from './auth/firebaseConfig';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { FanControlService } from './fan-control/fan-control.service';
     FormsModule,
     HttpModule,
     AppRouterModule,
-    AngularFireModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule
   ],
   providers: [
@@ -32,6 +33,8 @@ import { FanControlService } from './fan-control/fan-control.service';
     AuthService,
     FanControlService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

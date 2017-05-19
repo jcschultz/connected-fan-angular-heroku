@@ -2,19 +2,10 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 
-let _window :any = window;
 
-let firebaseConfig = {
-  apiKey : _window.FIREBASE_CONFIG_API_KEY,
-  authDomain : _window.FIREBASE_CONFIG_AUTH_DOMAIN,
-  databaseURL : _window.FIREBASE_CONFIG_DATABASE_URL,
-  projectId : _window.FIREBASE_CONFIG_PROJECT_ID,
-  storageBucket : _window.FIREBASE_CONFIG_STORAGE_BUCKET,
-  messagingSenderId : _window.FIREBASE_CONFIG_MESSAGING_SENDER_ID
-};
 
 @Injectable()
 export class AuthService {
@@ -22,12 +13,14 @@ export class AuthService {
   user: Observable<firebase.User>;
   
   constructor(private router: Router, public afAuth: AngularFireAuth) {
+    console.log('in constructor of authservice');
     this.user = afAuth.authState;
     console.log('this.user', this.user);
   }
   
   initApp() {
-    AngularFireModule.initializeApp(firebaseConfig);
+    // AngularFireModule.initializeApp(firebaseConfig);
+    //firebase.initializeApp(firebaseConfig);
   }
   
   signinUser(email: string, password: string) {
