@@ -96,6 +96,7 @@ router.use(function(req, res, next) {
   //       res.status(401).send('Unauthorized');
   //     }
   //   })
+  console.log('@@@ INSIDE AUTH0 TOKEN REQUEST @@@');
   let options = {
     method: 'POST',
     uri: process.env.AUTH0_CLIENT_TOKEN_URL,
@@ -113,6 +114,7 @@ router.use(function(req, res, next) {
       console.log('@@@ BEGIN ERROR FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
       console.log(err);
       console.log('@@@ END ERROR FROM AUTH0 ACCESS_TOKEN REQUEST @@@');
+      res.status(401).json(err);
     });
 });
 
@@ -128,6 +130,7 @@ router.use(function(req, res, next) {
   //     fanIpAddress = data.body.address;
   //     next();
   //   });
+  console.log('@@@ INSIDE IP TRACKER REQUEST @@@');
   let uri = process.env.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME;
   
   request(uri)
@@ -143,6 +146,7 @@ router.use(function(req, res, next) {
       console.log('@@@ BEGIN ERROR FROM IP TRACKER REQUEST @@@');
       console.log(err);
       console.log('@@@ END ERROR FROM IP TRACKER REQUEST @@@');
+      res.status(500).json(err);
     });
 });
 
@@ -166,6 +170,7 @@ router.put('/fan/:action', function (req, res, next) {
 });
 
 router.put('/light', function (req, res, next) {
+  console.log('@@@ INSIDE LIGHT API REQUEST @@@');
   sendRequest('/light')
     .then((response) => {
       res.status(200).send('success');
