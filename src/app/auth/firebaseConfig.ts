@@ -1,28 +1,15 @@
-import { environment } from './../../environments/environment';
-let _window: any = window;
 
-let apiKey = environment.FIREBASE_API_KEY;
-let authDomain = environment.FIREBASE_AUTH_DOMAIN;
-let databaseURL = environment.FIREBASE_DATABASE_URL;
-let projectId = environment.FIREBASE_PROJECT_ID;
-let storageBucket = environment.FIREBASE_STORAGE_BUCKET;
-let messagingSenderId = environment.FIREBASE_MESSAGING_SENDER_ID;
-
-if (!environment.production) {
-  apiKey = _window.FIREBASE_CONFIG_API_KEY;
-  authDomain = _window.FIREBASE_CONFIG_AUTH_DOMAIN;
-  databaseURL = _window.FIREBASE_CONFIG_DATABASE_URL;
-  projectId = _window.FIREBASE_CONFIG_PROJECT_ID;
-  storageBucket = _window.FIREBASE_CONFIG_STORAGE_BUCKET;
-  messagingSenderId = _window.FIREBASE_CONFIG_MESSAGING_SENDER_ID;
-}
-
+// these are specific to this app. they should be changed for any other projects/apps.
+// i don't like storing these here, even though they aren't secrets. they're visible
+// in the browser. but i'd prefer to have them in a process.env variable. for some
+// reason that has cost me hours, all the tricks i could find with pulling these from
+// heroku's config vars didn't work. so i give up!
 export let firebaseConfig = {
-  apiKey : apiKey,
-  authDomain : authDomain,
-  databaseURL : databaseURL,
-  projectId : projectId,
-  storageBucket : storageBucket,
-  messagingSenderId : messagingSenderId
+  apiKey : 'AIzaSyB3XuGiYtBjUiOedurig5Fk9QhAs5mR2_0',
+  authDomain : 'connected-fan.firebaseapp.com',
+  databaseURL : 'https://connected-fan.firebaseio.com',
+  projectId : 'connected-fan',
+  storageBucket : 'connected-fan.appspot.com',
+  messagingSenderId : '586221658419'
 };
 
