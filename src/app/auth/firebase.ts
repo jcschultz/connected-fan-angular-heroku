@@ -23,6 +23,7 @@ export class FirebaseApp implements firebase.app.App {
   delete: () => firebase.Promise<any>;
   
   constructor() {
+    // in firebase.ts constructor
     return firebase.initializeApp(firebaseConfig);
   }
 }
