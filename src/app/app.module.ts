@@ -22,7 +22,7 @@ import { firebaseConfig } from './auth/firebaseConfig';
   ],
   imports: [
     AngularFireModule.initializeApp({
-      apiKey : firebaseConfig.apiKey,
+      apiKey : 'AIzaSyB3XuGiYtBjUiOedurig5Fk9QhAs5mR2_0',
       authDomain : firebaseConfig.authDomain,
       databaseURL : firebaseConfig.databaseURL,
       projectId : firebaseConfig.projectId,
