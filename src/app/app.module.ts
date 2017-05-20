@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
 import { HomeComponentComponent } from './home-component/home-component.component';
@@ -28,6 +29,7 @@ import { firebaseConfig } from './auth/firebaseConfig';
     AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [
+    AngularFireAuth,
     AuthGuardService,
     AuthService,
     FanControlService

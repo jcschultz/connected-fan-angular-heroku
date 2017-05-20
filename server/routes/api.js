@@ -3,12 +3,17 @@ let router = express.Router();
 let superagent = require('superagent');
 let request = require('request-promise-native');
 let firebaseApp = require('./../modules/firebase');
+let devConfig;
+
+if (!process.env.PORT) {
+  devConfig = require('./../../env');
+}
 
 const auth0Data = {
-  client_id : process.env.AUTH0_FAN_CLIENT_ID,
-  client_secret : process.env.AUTH0_FAN_CLIENT_SECRET,
-  grant_type : process.env.AUTH0_GRANT_TYPE,
-  audience : process.env.AUTH0_FAN_AUDIENCE
+  client_id : process.env.AUTH0_FAN_CLIENT_ID || devConfig.AUTH0_FAN_CLIENT_ID,
+  client_secret : process.env.AUTH0_FAN_CLIENT_SECRET || devConfig.AUTH0_FAN_CLIENT_SECRET,
+  grant_type : process.env.AUTH0_GRANT_TYPE || devConfig.AUTH0_GRANT_TYPE,
+  audience : process.env.AUTH0_FAN_AUDIENCE || devConfig.AUTH0_FAN_AUDIENCE
 };
 
 const validActions = ['high', 'medium', 'low', 'off'];
@@ -17,7 +22,7 @@ let fanIpAddress = null;
 
 function sendRequest(path, req) {
   
-  let uri = 'http://' + fanIpAddress + ':' + process.env.IP_MACHINE_PORT + path;
+  let uri = 'http://' + fanIpAddress + ':' + process.env.IP_MACHINE_PORT || devConfig.IP_MACHINE_PORT + path;
   let options = {
     method : 'GET',
     uri : uri,
@@ -51,7 +56,7 @@ router.use(function (req, res, next) {
   
   let options = {
     method : 'POST',
-    uri : process.env.AUTH0_CLIENT_TOKEN_URL,
+    uri : process.env.AUTH0_CLIENT_TOKEN_URL || devConfig.AUTH0_CLIENT_TOKEN_URL,
     json : auth0Data
   };
   
@@ -73,7 +78,7 @@ router.use(function (req, res, next) {
 // middleware to get ip address of connected fan
 router.use(function (req, res, next) {
   
-  let uri = process.env.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME;
+  let uri = process.env.IP_TRACKER_URL || devConfig.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME || devConfig.IP_MACHINE_NAME;
   console.log('uri: ', uri);
   
   request(uri)
