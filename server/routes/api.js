@@ -21,8 +21,8 @@ const validActions = ['high', 'medium', 'low', 'off'];
 let fanIpAddress = null;
 
 function sendRequest(path, req) {
-  
-  let uri = 'http://' + fanIpAddress + ':' + process.env.IP_MACHINE_PORT || devConfig.IP_MACHINE_PORT + path;
+  let ipMachinePort = process.env.IP_MACHINE_PORT || devConfig.IP_MACHINE_PORT;
+  let uri = 'http://' + fanIpAddress + ':' + ipMachinePort + path;
   let options = {
     method : 'GET',
     uri : uri,
@@ -77,8 +77,9 @@ router.use(function (req, res, next) {
 
 // middleware to get ip address of connected fan
 router.use(function (req, res, next) {
-  
-  let uri = process.env.IP_TRACKER_URL || devConfig.IP_TRACKER_URL + '/' + process.env.IP_MACHINE_NAME || devConfig.IP_MACHINE_NAME;
+  let ipTrackerUrl = process.env.IP_TRACKER_URL || devConfig.IP_TRACKER_URL;
+  let ipMachineName = process.env.IP_MACHINE_NAME || devConfig.IP_MACHINE_NAME;
+  let uri = ipTrackerUrl + '/' + ipMachineName;
   console.log('uri: ', uri);
   
   request(uri)
