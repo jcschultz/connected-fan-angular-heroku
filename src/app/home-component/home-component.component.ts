@@ -17,12 +17,14 @@ export class HomeComponentComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private fanControlService: FanControlService) { }
 
   ngOnInit() {
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-    }
-    else {
-      this.token = this.authService.getToken();
-    }
+    this.authService.afAuth.authState.subscribe((auth) => {
+      if (!auth) {
+        this.router.navigate(['/login']);
+      }
+      else {
+        this.token = this.authService.getToken();
+      }
+    });
   }
   
   onBtnClick(control: string, speed: string) {

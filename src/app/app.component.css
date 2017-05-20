@@ -2,3 +2,8 @@
   background: #ccc;
   margin-bottom: 40px;
 }
+.log-out-icon {
+  font-size: 150%;
+  margin-top: 30px;
+  cursor: pointer;
+}

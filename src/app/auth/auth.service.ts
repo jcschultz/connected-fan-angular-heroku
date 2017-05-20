@@ -13,11 +13,9 @@ export class AuthService {
   token: string;
   user: Observable<firebase.User>;
 
-  constructor(private router: Router, private afAuth: AngularFireAuth) {
-    console.log('in constructor of authservice');
+  constructor(private router: Router, public afAuth: AngularFireAuth) {
     // this.auth = fbApp.auth();
     this.user = afAuth.authState;
-    console.log('this.user', this.user);
   }
   
   signinUser(email: string, password: string) {
@@ -49,7 +47,7 @@ export class AuthService {
   }
 
   logout() {
-    this.auth.signOut();
+    this.afAuth.auth.signOut();
     this.token = null;
   }
 
