@@ -39,7 +39,7 @@ router.use(function (req, res, next) {
   let token = req.body.token;
   
   if (!token) {
-    return res.redirect('/login');
+    return res.redirect('/login?err=NO_TOKEN');
   }
   
   firebaseApp.verifyIdToken(token)
@@ -47,7 +47,10 @@ router.use(function (req, res, next) {
       next();
     })
     .catch((err) => {
-      return res.redirect('/login');
+      console.log('@@@@ verify token error @@@@');
+      console.log(err);
+      console.log('@@@@ verify token error @@@@');
+      return res.redirect('/login?err=INVALID_TOKEN');
     });
 });
 
