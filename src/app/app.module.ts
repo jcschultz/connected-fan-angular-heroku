@@ -14,9 +14,6 @@ import { AuthService } from './auth/auth.service';
 import { FanControlService } from './fan-control/fan-control.service';
 import { firebaseConfig } from './auth/firebaseConfig';
 
-let fbcString = JSON.stringify(firebaseConfig);
-let fbcObj = JSON.parse(fbcString);
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +21,7 @@ let fbcObj = JSON.parse(fbcString);
     LoginComponentComponent
   ],
   imports: [
-    AngularFireModule.initializeApp(fbcObj),
+    AngularFireModule.initializeApp(firebaseConfig),
     BrowserModule,
     FormsModule,
     HttpModule,
