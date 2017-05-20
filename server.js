@@ -37,12 +37,19 @@ app.use('/api', api);
 
 app.get('/firebaseConfig.js', function(req, res){
   
-  res.write('var FIREBASE_CONFIG_API_KEY = "' + process.env.FIREBASE_API_KEY || devConfig.FIREBASE_API_KEY + '";' + '\n');
-  res.write('var FIREBASE_CONFIG_AUTH_DOMAIN = "' + process.env.FIREBASE_AUTH_DOMAIN || devConfig.FIREBASE_AUTH_DOMAIN + '";' + '\n');
-  res.write('var FIREBASE_CONFIG_DATABASE_URL = "' + process.env.FIREBASE_DATABASE_URL || devConfig.FIREBASE_DATABASE_URL + '";' + '\n');
-  res.write('var FIREBASE_CONFIG_PROJECT_ID = "' + process.env.FIREBASE_PROJECT_ID || devConfig.FIREBASE_PROJECT_ID + '";' + '\n');
-  res.write('var FIREBASE_CONFIG_STORAGE_BUCKET = "' + process.env.FIREBASE_STORAGE_BUCKET || devConfig.FIREBASE_STORAGE_BUCKET + '";' + '\n');
-  res.write('var FIREBASE_CONFIG_MESSAGING_SENDER_ID = "' + process.env.FIREBASE_MESSAGING_SENDER_ID || devConfig.FIREBASE_MESSAGING_SENDER_ID + '";' + '\n');
+  let FIREBASE_API_KEY = process.env.FIREBASE_API_KEY || devConfig.FIREBASE_API_KEY;
+  let FIREBASE_AUTH_DOMAIN = process.env.FIREBASE_AUTH_DOMAIN || devConfig.FIREBASE_AUTH_DOMAIN;
+  let FIREBASE_DATABASE_URL = process.env.FIREBASE_DATABASE_URL || devConfig.FIREBASE_DATABASE_URL;
+  let FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID || devConfig.FIREBASE_PROJECT_ID;
+  let FIREBASE_STORAGE_BUCKET = process.env.FIREBASE_STORAGE_BUCKET || devConfig.FIREBASE_STORAGE_BUCKET;
+  let FIREBASE_MESSAGING_SENDER_ID = process.env.FIREBASE_MESSAGING_SENDER_ID || devConfig.FIREBASE_MESSAGING_SENDER_ID;
+  
+  res.write('var FIREBASE_CONFIG_API_KEY = "' + FIREBASE_API_KEY + '";' + '\n');
+  res.write('var FIREBASE_CONFIG_AUTH_DOMAIN = "' + FIREBASE_AUTH_DOMAIN + '";' + '\n');
+  res.write('var FIREBASE_CONFIG_DATABASE_URL = "' + FIREBASE_DATABASE_URL + '";' + '\n');
+  res.write('var FIREBASE_CONFIG_PROJECT_ID = "' + FIREBASE_PROJECT_ID + '";' + '\n');
+  res.write('var FIREBASE_CONFIG_STORAGE_BUCKET = "' + FIREBASE_STORAGE_BUCKET + '";' + '\n');
+  res.write('var FIREBASE_CONFIG_MESSAGING_SENDER_ID = "' + FIREBASE_MESSAGING_SENDER_ID + '";' + '\n');
   res.end();
   
 });
