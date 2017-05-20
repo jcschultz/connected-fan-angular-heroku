@@ -9,7 +9,13 @@ export class FanControlService {
   constructor() { }
   
   callAction(control: string, action: string, token: string) {
-    let url: string = _window.location.protocol + '//' + _window.location.hostname + '/api/' + control;
+    let hostName = _window.location.hostname;
+    
+    if (hostName === 'localhost') {
+      hostName += ':3000';
+    }
+    
+    let url: string = _window.location.protocol + '//' + hostName + '/api/' + control;
     
     if (control === 'fan') {
       url += '/' + action;
@@ -18,7 +24,8 @@ export class FanControlService {
     let options = {
       method: 'PUT',
       url: url,
-      json: {'token' : token}
+      body: {'token' : token},
+      json: true
     };
     
     return request(options);

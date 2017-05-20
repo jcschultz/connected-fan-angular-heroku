@@ -17,12 +17,15 @@ export class HomeComponentComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private fanControlService: FanControlService) { }
 
   ngOnInit() {
-    this.authService.afAuth.authState.subscribe((auth) => {
+    this.authService.user.subscribe((auth) => {
       if (!auth) {
         this.router.navigate(['/login']);
       }
       else {
-        this.token = this.authService.getToken();
+        this.authService.doTokenRetrieval()
+          .then(() => {
+            this.token = this.authService.token;
+          });
       }
     });
   }
@@ -33,8 +36,6 @@ export class HomeComponentComponent implements OnInit {
     }
     
     this.activateButton(control, speed);
-    
-    console.log('this.token,', this.token);
     
     this.fanControlService.callAction(control, speed, this.token)
       .then((res) => {

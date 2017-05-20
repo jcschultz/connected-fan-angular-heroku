@@ -23,10 +23,7 @@ export class AuthService {
       .then(
         response => {
           this.router.navigate(['/']);
-          this.afAuth.auth.currentUser.getIdToken()
-            .then(
-              (token: string) => this.token = token
-            );
+          this.doTokenRetrieval();
         }
       )
       .catch(
@@ -35,11 +32,10 @@ export class AuthService {
   }
 
   getToken() {
-    this.afAuth.auth.currentUser.getIdToken()
-      .then(
-        (token: string) => this.token = token
-      );
-    return this.token;
+    this.doTokenRetrieval()
+      .then(() => {
+        return this.token;
+      });
   }
 
   isAuthenticated() {
@@ -50,5 +46,18 @@ export class AuthService {
     this.afAuth.auth.signOut();
     this.token = null;
   }
+  
+  doTokenRetrieval() {
+    return new Promise((resolve, reject) => {
+      this.afAuth.auth.currentUser.getIdToken()
+        .then(
+          (token: string) => {
+            this.token = token;
+            resolve();
+          }
+        );
+    });
+  }
+  
 
 }
