@@ -34,6 +34,8 @@ export class HomeComponentComponent implements OnInit {
     
     this.activateButton(control, speed);
     
+    console.log('this.token,', this.token);
+    
     this.fanControlService.callAction(control, speed, this.token)
       .then((res) => {
         this.resetButtons();
