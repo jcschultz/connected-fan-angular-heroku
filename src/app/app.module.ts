@@ -10,9 +10,7 @@ import { AppRouterModule } from './app-router/app-router.module';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
 import { FanControlService } from './fan-control/fan-control.service';
-import { firebaseConfig } from './auth/firebaseConfig';
 
-console.log('firebaseConfig', JSON.stringify(firebaseConfig));
 
 @NgModule({
   declarations: [

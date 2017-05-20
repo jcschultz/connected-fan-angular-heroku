@@ -1,27 +1,43 @@
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { firebaseConfig } from './firebaseConfig';
+import { Observer } from 'rxjs/Observer';
+
+import { FirebaseApp } from './firebase';
 
 @Injectable()
 export class AuthService {
+  auth: firebase.auth.Auth;
   token: string;
   user: Observable<firebase.User>;
-  
-  constructor(private router: Router) {
-    firebase.initializeApp(firebaseConfig);
+
+  constructor(private router: Router, fbApp: FirebaseApp) {
     console.log('in constructor of authservice');
-    //this.user = afAuth.authState;
-    //console.log('this.user', this.user);
+    this.auth = fbApp.auth();
+    this.user = this.getObservableUser(fbApp);
+    console.log('this.user', this.user);
   }
   
-  initApp() {
-    // AngularFireModule.initializeApp(firebaseConfig);
+  getObservableUser(fbApp: FirebaseApp): Observable<firebase.User> {
+    const user = Observable.create((obs: Observer<firebase.User>) => {
+      this.auth.onAuthStateChanged(
+        (user? : firebase.User) => {
+          obs.next(user)
+        },
+        (err: firebase.auth.Error) => {
+          obs.error(err)
+        },
+        () => {
+          obs.complete();
+        }
+      )
+    });
+    
+    return user;
   }
-  
+
   signinUser(email: string, password: string) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    this.auth.signInWithEmailAndPassword(email, password)
       .then(
         response => {
           this.router.navigate(['/']);
@@ -35,22 +51,22 @@ export class AuthService {
         error => console.log(error)
       );
   }
-  
+
   getToken() {
-    firebase.auth().currentUser.getIdToken()
+    this.auth.currentUser.getIdToken()
       .then(
         (token: string) => this.token = token
       );
     return this.token;
   }
-  
+
   isAuthenticated() {
     return this.token != null;
   }
-  
+
   logout() {
-    firebase.auth().signOut();
+    this.auth.signOut();
     this.token = null;
   }
-  
+
 }
