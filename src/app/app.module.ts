@@ -14,9 +14,6 @@ import { AuthService } from './auth/auth.service';
 import { FanControlService } from './fan-control/fan-control.service';
 import { firebaseConfig } from './auth/firebaseConfig';
 
-console.log('firebaseConfig', JSON.stringify(firebaseConfig));
-console.log(firebaseConfig.apiKey);
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +21,14 @@ console.log(firebaseConfig.apiKey);
     LoginComponentComponent
   ],
   imports: [
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp({
+      apiKey : firebaseConfig.apiKey,
+      authDomain : firebaseConfig.authDomain,
+      databaseURL : firebaseConfig.databaseURL,
+      projectId : firebaseConfig.projectId,
+      storageBucket : firebaseConfig.storageBucket,
+      messagingSenderId : firebaseConfig.messagingSenderId
+    }),
     BrowserModule,
     FormsModule,
     HttpModule,
