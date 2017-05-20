@@ -23,11 +23,11 @@ console.log('firebaseConfig', JSON.stringify(firebaseConfig));
     LoginComponentComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(firebaseConfig),
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRouterModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AppRouterModule
   ],
   providers: [
     AngularFireAuth,
