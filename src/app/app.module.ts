@@ -14,6 +14,7 @@ import { AuthService } from './auth/auth.service';
 import { FanControlService } from './fan-control/fan-control.service';
 import { firebaseConfig } from './auth/firebaseConfig';
 
+console.log('firebaseConfig', JSON.stringify(firebaseConfig));
 
 @NgModule({
   declarations: [
