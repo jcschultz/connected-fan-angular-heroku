@@ -8,3 +8,4 @@ export let firebaseConfig = {
   storageBucket : _window.FIREBASE_CONFIG_STORAGE_BUCKET,
   messagingSenderId : _window.FIREBASE_CONFIG_MESSAGING_SENDER_ID
 };
+

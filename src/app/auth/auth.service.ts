@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 
-import { FirebaseApp } from './firebase';
+import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
@@ -11,37 +13,19 @@ export class AuthService {
   token: string;
   user: Observable<firebase.User>;
 
-  constructor(private router: Router, fbApp: FirebaseApp) {
+  constructor(private router: Router, afAuth: AngularFireAuth) {
     console.log('in constructor of authservice');
-    this.auth = fbApp.auth();
-    this.user = this.getObservableUser(fbApp);
+    // this.auth = fbApp.auth();
+    this.user = afAuth.authState;
     console.log('this.user', this.user);
   }
   
-  getObservableUser(fbApp: FirebaseApp): Observable<firebase.User> {
-    const user = Observable.create((obs: Observer<firebase.User>) => {
-      this.auth.onAuthStateChanged(
-        (user? : firebase.User) => {
-          obs.next(user)
-        },
-        (err: firebase.auth.Error) => {
-          obs.error(err)
-        },
-        () => {
-          obs.complete();
-        }
-      )
-    });
-    
-    return user;
-  }
-
   signinUser(email: string, password: string) {
     this.auth.signInWithEmailAndPassword(email, password)
       .then(
         response => {
           this.router.navigate(['/']);
-          firebase.auth().currentUser.getIdToken()
+          this.auth.currentUser.getIdToken()
             .then(
               (token: string) => this.token = token
             );
