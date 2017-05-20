@@ -36,7 +36,6 @@ firebaseApp.initApp();
 app.use('/api', api);
 
 app.get('/firebaseConfig.js', function(req, res){
-  
   let FIREBASE_API_KEY = process.env.FIREBASE_API_KEY || devConfig.FIREBASE_API_KEY;
   let FIREBASE_AUTH_DOMAIN = process.env.FIREBASE_AUTH_DOMAIN || devConfig.FIREBASE_AUTH_DOMAIN;
   let FIREBASE_DATABASE_URL = process.env.FIREBASE_DATABASE_URL || devConfig.FIREBASE_DATABASE_URL;

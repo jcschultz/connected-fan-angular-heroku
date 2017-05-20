@@ -13,7 +13,7 @@ export class AuthService {
   token: string;
   user: Observable<firebase.User>;
 
-  constructor(private router: Router, afAuth: AngularFireAuth) {
+  constructor(private router: Router, private afAuth: AngularFireAuth) {
     console.log('in constructor of authservice');
     // this.auth = fbApp.auth();
     this.user = afAuth.authState;
@@ -21,11 +21,11 @@ export class AuthService {
   }
   
   signinUser(email: string, password: string) {
-    this.auth.signInWithEmailAndPassword(email, password)
+    this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(
         response => {
           this.router.navigate(['/']);
-          this.auth.currentUser.getIdToken()
+          this.afAuth.auth.currentUser.getIdToken()
             .then(
               (token: string) => this.token = token
             );
@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   getToken() {
-    this.auth.currentUser.getIdToken()
+    this.afAuth.auth.currentUser.getIdToken()
       .then(
         (token: string) => this.token = token
       );
